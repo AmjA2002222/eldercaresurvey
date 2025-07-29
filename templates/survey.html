@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElderCareSurvey</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .language-selector select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .language-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .title-section {
+            flex: 1;
+            text-align: center;
+        }
+        .inline-language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .inline-language-selector select {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+        .inline-language-selector .language-icon {
+            font-size: 16px;
+            color: #3498db;
+        }
+        /* Hide Google Translate branding */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        .goog-te-menu-value {
+            display: none !important;
+        }
+        .goog-te-gadget {
+            display: none !important;
+        }
+        .goog-te-combo {
+            display: none !important;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #f8f9fa;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <div class="title-section">
+                <h1>ElderCareSurvey</h1>
+            </div>
+            <div class="inline-language-selector">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="ar">العربية</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+        </div>
+        
+        <form id="surveyForm">
+            <div class="question">
+                <h3>1. How old are you?</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="age_60_69" name="age_group" value="60-69">
+                        <label for="age_60_69">60-69</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="age_70_79" name="age_group" value="70-79">
+                        <label for="age_70_79">70-79</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="age_80_89" name="age_group" value="80-89">
+                        <label for="age_80_89">80-89</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="age_90_plus" name="age_group" value="90+">
+                        <label for="age_90_plus">90+</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. Do you have a device that talks to you (like Alexa or Siri)?</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="digital_yes" name="uses_digital_assistant" value="Yes">
+                        <label for="digital_yes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="digital_no" name="uses_digital_assistant" value="No">
+                        <label for="digital_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. Do you find phones and computers hard to use?</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="difficulty_easy" name="difficulty_using_tech" value="Very Easy">
+                        <label for="difficulty_easy">Very Easy</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="difficulty_somewhat" name="difficulty_using_tech" value="Somewhat Easy">
+                        <label for="difficulty_somewhat">Somewhat Easy</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="difficulty_neutral" name="difficulty_using_tech" value="Neutral">
+                        <label for="difficulty_neutral">Neutral</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="difficulty_hard" name="difficulty_using_tech" value="Somewhat Difficult">
+                        <label for="difficulty_hard">Somewhat Difficult</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="difficulty_very_hard" name="difficulty_using_tech" value="Very Difficult">
+                        <label for="difficulty_very_hard">Very Difficult</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>4. Would you like a talking companion that talks to you?</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">(It could remind you to take medicine, call for help, or just talk to you)</p>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="interest_very" name="interest_in_ai" value="Yes, very much">
+                        <label for="interest_very">Yes, very much</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_somewhat" name="interest_in_ai" value="Maybe, sounds interesting">
+                        <label for="interest_somewhat">Maybe, sounds interesting</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_neutral" name="interest_in_ai" value="Not sure">
+                        <label for="interest_neutral">Not sure</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_not" name="interest_in_ai" value="Probably not">
+                        <label for="interest_not">Probably not</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_not_at_all" name="interest_in_ai" value="No, not interested">
+                        <label for="interest_not_at_all">No, not interested</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>5. What would you like help with? (Pick all that apply)</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_reminders" name="helpful_features" value="Remembering to take medicine">
+                        <label for="feature_reminders">Remembering to take medicine</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_emergency" name="helpful_features" value="Getting help if I fall or feel unwell">
+                        <label for="feature_emergency">Getting help if I fall or feel unwell</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_social" name="helpful_features" value="Feeling lonely or wanting someone to talk to">
+                        <label for="feature_social">Feeling lonely or wanting someone to talk to</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_health" name="helpful_features" value="Keeping track of my health">
+                        <label for="feature_health">Keeping track of my health</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_entertainment" name="helpful_features" value="Finding things to do or watch">
+                        <label for="feature_entertainment">Finding things to do or watch</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_assistance" name="helpful_features" value="Daily tasks like cooking or cleaning">
+                        <label for="feature_assistance">Daily tasks like cooking or cleaning</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_memory" name="helpful_features" value="Remembering appointments or important dates">
+                        <label for="feature_memory">Remembering appointments or important dates</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_communication" name="helpful_features" value="Staying in touch with family">
+                        <label for="feature_communication">Staying in touch with family</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_none" name="helpful_features" value="None of the above">
+                        <label for="feature_none">None of the above</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>6. Would you like to try a talking companion that helps with the things you mentioned above?</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="trial_yes" name="trial_participation" value="Yes">
+                        <label for="trial_yes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="trial_no" name="trial_participation" value="No">
+                        <label for="trial_no">No</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="trial_maybe" name="trial_participation" value="Maybe">
+                        <label for="trial_maybe">Maybe</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>7. How would you feel about talking to a device?</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">(Like talking on the phone, but the device answers you)</p>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="comfort_very" name="comfort_with_ai_voice" value="I'd be fine with it">
+                        <label for="comfort_very">I'd be fine with it</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="comfort_somewhat" name="comfort_with_ai_voice" value="I think I could get used to it">
+                        <label for="comfort_somewhat">I think I could get used to it</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="comfort_neutral" name="comfort_with_ai_voice" value="I'm not sure">
+                        <label for="comfort_neutral">I'm not sure</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="comfort_uncomfortable" name="comfort_with_ai_voice" value="It might feel strange">
+                        <label for="comfort_uncomfortable">It might feel strange</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="comfort_very_uncomfortable" name="comfort_with_ai_voice" value="I wouldn't like it">
+                        <label for="comfort_very_uncomfortable">I wouldn't like it</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>8. What worries you about having a talking device in your home? (Pick all that apply)</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_privacy" name="concerns" value="Privacy">
+                        <label for="concern_privacy">Privacy</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_cost" name="concerns" value="Cost">
+                        <label for="concern_cost">Cost</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_reliability" name="concerns" value="Reliability">
+                        <label for="concern_reliability">Reliability</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_complexity" name="concerns" value="Complexity">
+                        <label for="concern_complexity">Complexity</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_safety" name="concerns" value="Safety">
+                        <label for="concern_safety">Safety</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_none" name="concerns" value="No Concerns">
+                        <label for="concern_none">No Concerns</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>9. How much would you pay each month for a talking companion service?</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="pay_free" name="willingness_to_pay" value="Free">
+                        <label for="pay_free">Free</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_10" name="willingness_to_pay" value="$1-10">
+                        <label for="pay_10">$1-10</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_25" name="willingness_to_pay" value="$11-25">
+                        <label for="pay_25">$11-25</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_50" name="willingness_to_pay" value="$26-50">
+                        <label for="pay_50">$26-50</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_more" name="willingness_to_pay" value="$50+">
+                        <label for="pay_more">$50+</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>10. Based on this survey, how interested are you in trying a talking companion? (1 = Not interested at all, 5 = Very interested)</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="interest_1" name="interest_level" value="1">
+                        <label for="interest_1">1 - Not interested at all</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_2" name="interest_level" value="2">
+                        <label for="interest_2">2 - Slightly interested</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_3" name="interest_level" value="3">
+                        <label for="interest_3">3 - Somewhat interested</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_4" name="interest_level" value="4">
+                        <label for="interest_4">4 - Interested</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_5" name="interest_level" value="5">
+                        <label for="interest_5">5 - Very interested</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>11. Is there anything else you'd like to tell us?</h3>
+                <textarea name="additional_comments" placeholder="Tell us anything else you think we should know..."></textarea>
+            </div>
+
+            <div class="question">
+                <h3>12. Contact Information (Optional)</h3>
+                <p style="color: #666; margin-bottom: 15px;">We'd like to call or email you about talking companion technology. Please give us your information if you want to learn more.</p>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_name" style="display: block; margin-bottom: 5px; font-weight: bold;">Your Name:</label>
+                    <input type="text" id="contact_name" name="contact_name" placeholder="Enter your name">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address:</label>
+                    <input type="email" id="contact_email" name="contact_email" placeholder="Enter your email address">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number:</label>
+                    <input type="tel" id="contact_phone" name="contact_phone" placeholder="Enter your phone number">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_preference" style="display: block; margin-bottom: 5px; font-weight: bold;">Preferred Contact Method:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="pref_email" name="contact_preference" value="Email">
+                            <label for="pref_email">Email</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pref_phone" name="contact_preference" value="Phone">
+                            <label for="pref_phone">Phone</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pref_either" name="contact_preference" value="Either">
+                            <label for="pref_either">Either is fine</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Submit Survey</button>
+        </form>
+
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        // Google Translate Integration
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr,ar,es,de,it,pt,ru,ja,ko,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+        
+        // Load Google Translate script
+        var script = document.createElement('script');
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.head.appendChild(script);
+        
+        // Custom language change function
+        function changeLanguage(langCode) {
+            // Wait for Google Translate to load
+            var checkExist = setInterval(function() {
+                if (window.google && window.google.translate) {
+                    // Create a hidden div for Google Translate if it doesn't exist
+                    var translateDiv = document.getElementById('google_translate_element');
+                    if (!translateDiv) {
+                        translateDiv = document.createElement('div');
+                        translateDiv.id = 'google_translate_element';
+                        translateDiv.style.display = 'none';
+                        document.body.appendChild(translateDiv);
+                        
+                        // Initialize Google Translate
+                        new google.translate.TranslateElement({
+                            pageLanguage: 'en',
+                            includedLanguages: 'en,fr,ar,es,de,it,pt,ru,ja,ko,zh-CN',
+                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            autoDisplay: false
+                        }, 'google_translate_element');
+                    }
+                    
+                    // Wait a bit more for the widget to be ready
+                    setTimeout(function() {
+                        var select = document.querySelector('.goog-te-combo');
+                        if (select) {
+                            select.value = langCode;
+                            select.dispatchEvent(new Event('change'));
+                            clearInterval(checkExist);
+                        }
+                    }, 500);
+                }
+            }, 100);
+        }
+        
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Handle multiple checkbox selections
+            const helpfulFeatures = [];
+            const concerns = [];
+            
+            document.querySelectorAll('input[name="helpful_features"]:checked').forEach(checkbox => {
+                helpfulFeatures.push(checkbox.value);
+            });
+            
+            document.querySelectorAll('input[name="concerns"]:checked').forEach(checkbox => {
+                concerns.push(checkbox.value);
+            });
+            
+            // Update form data with arrays
+            formData.delete('helpful_features');
+            formData.delete('concerns');
+            
+            helpfulFeatures.forEach(feature => {
+                formData.append('helpful_features', feature);
+            });
+            
+            concerns.forEach(concern => {
+                formData.append('concerns', concern);
+            });
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    document.getElementById('successMessage').textContent = data.message;
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('surveyForm').reset();
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').textContent = 'Error: ' + error.message;
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 
