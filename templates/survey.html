@@ -150,50 +150,6 @@
             margin-top: 20px;
             display: none;
         }
-        /* Google Translate Widget */
-        #google_translate_element {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        /* Hide Google Translate banner */
-        .goog-te-banner-frame {
-            display: none !important;
-        }
-        .goog-te-menu-value {
-            display: none !important;
-        }
-        .goog-te-gadget {
-            display: none !important;
-        }
-        .goog-te-combo {
-            display: none !important;
-        }
-        .goog-te-banner-frame.skiptranslate {
-            display: none !important;
-        }
-        body {
-            top: 0px !important;
-        }
-        /* Style the Google Translate widget */
-        .goog-te-gadget {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-        }
-        .goog-te-gadget-simple {
-            background-color: white !important;
-            border: none !important;
-            padding: 0 !important;
-        }
-        .goog-te-gadget-simple .goog-te-menu-value {
-            color: #3498db !important;
-            font-size: 14px !important;
-        }
     </style>
 </head>
 <body>
@@ -208,20 +164,9 @@
                     <option value="en">English</option>
                     <option value="fr">Français</option>
                     <option value="ar">العربية</option>
-                    <option value="es">Español</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                    <option value="pt">Português</option>
-                    <option value="ru">Русский</option>
-                    <option value="ja">日本語</option>
-                    <option value="ko">한국어</option>
-                    <option value="zh">中文</option>
                 </select>
             </div>
         </div>
-        
-        <!-- Google Translate Widget -->
-        <div id="google_translate_element"></div>
         
         <form id="surveyForm">
             <div class="question">
@@ -514,45 +459,8 @@
         <div id="errorMessage" class="error-message"></div>
     </div>
 
+    <script src="/static/translations.js"></script>
     <script>
-        // Google Translate Integration
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,fr,ar,es,de,it,pt,ru,ja,ko,zh-CN',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-        
-        // Load Google Translate script immediately
-        var script = document.createElement('script');
-        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.head.appendChild(script);
-        
-        // Language change function
-        function changeLanguage(langCode) {
-            console.log('Changing language to:', langCode);
-            
-            // Wait for Google Translate to load
-            var checkExist = setInterval(function() {
-                if (window.google && window.google.translate) {
-                    console.log('Google Translate loaded');
-                    
-                    // Find the Google Translate select element
-                    var googleSelect = document.querySelector('.goog-te-combo');
-                    if (googleSelect) {
-                        console.log('Found Google Translate select');
-                        googleSelect.value = langCode;
-                        googleSelect.dispatchEvent(new Event('change'));
-                        clearInterval(checkExist);
-                    } else {
-                        console.log('Google Translate select not found, retrying...');
-                    }
-                }
-            }, 100);
-        }
-        
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
