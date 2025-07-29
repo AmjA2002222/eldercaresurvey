@@ -61,6 +61,46 @@ def waiting_list():
     
     return render_template('waiting_list.html', people=people)
 
+@app.route('/database')
+def database():
+    """View all survey responses"""
+    conn = sqlite3.connect('survey.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM responses ORDER BY id DESC')
+    responses = c.fetchall()
+    
+    # Get column names
+    c.execute('PRAGMA table_info(responses)')
+    columns = [column[1] for column in c.fetchall()]
+    
+    conn.close()
+    
+    return render_template('database.html', responses=responses, columns=columns)
+
+@app.route('/api/responses')
+def api_responses():
+    """API endpoint to get all responses as JSON"""
+    conn = sqlite3.connect('survey.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM responses ORDER BY id DESC')
+    responses = c.fetchall()
+    
+    # Get column names
+    c.execute('PRAGMA table_info(responses)')
+    columns = [column[1] for column in c.fetchall()]
+    
+    conn.close()
+    
+    # Convert to list of dictionaries
+    data = []
+    for response in responses:
+        row_dict = {}
+        for i, column in enumerate(columns):
+            row_dict[column] = response[i]
+        data.append(row_dict)
+    
+    return jsonify(data)
+
 @app.route('/submit', methods=['POST'])
 def submit():
     # Form will send data as POST fields
