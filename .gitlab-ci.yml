@@ -1,0 +1,71 @@
+# GitLab CI/CD for ElderCare Survey
+# Deploys to GitLab Pages with Flask
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+
+before_script:
+  - python --version
+  - pip install -r requirements.txt
+
+test:
+  stage: test
+  script:
+    - python -c "import flask; print('Flask version:', flask.__version__)"
+    - python -c "import app; print('App imported successfully')"
+  only:
+    - main
+    - master
+
+build:
+  stage: build
+  image: python:3.9
+  before_script:
+    - pip install -r requirements.txt
+    - pip install gunicorn
+  script:
+    - echo "Building Flask app..."
+    - mkdir -p public
+    - cp -r templates public/
+    - cp app.py public/
+    - cp requirements.txt public/
+    - echo "from app import app" > public/wsgi.py
+    - echo "Build completed!"
+  artifacts:
+    paths:
+      - public/
+    expire_in: 1 week
+  only:
+    - main
+    - master
+
+pages:
+  stage: deploy
+  image: python:3.9
+  before_script:
+    - pip install -r requirements.txt
+    - pip install gunicorn
+  script:
+    - echo "Deploying to GitLab Pages..."
+    - mkdir -p public
+    - cp -r templates public/
+    - cp app.py public/
+    - cp requirements.txt public/
+    - echo "from app import app" > public/wsgi.py
+    - echo "Deployment completed!"
+  artifacts:
+    paths:
+      - public/
+    expire_in: 1 week
+  only:
+    - main
+    - master

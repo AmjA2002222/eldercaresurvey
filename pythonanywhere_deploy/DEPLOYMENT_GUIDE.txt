@@ -1,0 +1,41 @@
+ELDERCARE SURVEY - PYTHONANYWHERE DEPLOYMENT GUIDE
+===============================================================
+
+STEP 1: Create PythonAnywhere Account
+1. Go to https://www.pythonanywhere.com/
+2. Click "Create a Beginner account" (FREE)
+3. Choose a username and password
+4. Verify your email
+
+STEP 2: Upload Files
+1. Log into PythonAnywhere
+2. Go to "Files" tab
+3. Navigate to your home directory
+4. Upload all files from this folder
+
+STEP 3: Set Up Web App
+1. Go to "Web" tab
+2. Click "Add a new web app"
+3. Choose "Flask"
+4. Select Python 3.9
+5. Set source code to: /home/YOUR_USERNAME/mysite
+6. Set working directory to: /home/YOUR_USERNAME/mysite
+
+STEP 4: Configure WSGI File
+1. Click on the WSGI configuration file
+2. Replace contents with the passenger_wsgi.py file
+3. Save the file
+
+STEP 5: Install Dependencies
+1. Go to "Consoles" tab
+2. Open a Bash console
+3. Run: pip install -r requirements.txt
+
+STEP 6: Reload Web App
+1. Go back to "Web" tab
+2. Click "Reload" button
+3. Your survey will be live at: YOUR_USERNAME.pythonanywhere.com
+
+✅ NO GITHUB REQUIRED!
+✅ COMPLETELY FREE!
+✅ NO PASSCODE NEEDED!

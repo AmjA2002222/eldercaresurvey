@@ -1,0 +1,35 @@
+GITLAB DEPLOYMENT GUIDE FOR ELDERCARE SURVEY
+========================================================
+
+STEP 1: Push to GitLab
+1. Create a new project on GitLab.com
+2. Copy the repository URL
+3. Run: git remote add origin YOUR_GITLAB_URL
+4. Run: git push -u origin main
+
+STEP 2: Enable GitLab Pages
+1. Go to your GitLab project
+2. Navigate to Settings > Pages
+3. Enable Pages if not already enabled
+
+STEP 3: Configure CI/CD
+1. The .gitlab-ci.yml file is already created
+2. GitLab will automatically run the pipeline
+3. Check the CI/CD tab to monitor deployment
+
+STEP 4: Access Your Survey
+1. Once deployed, your survey will be available at:
+   https://YOUR_USERNAME.gitlab.io/YOUR_PROJECT_NAME
+2. No passcode required!
+3. Accessible from anywhere in the world!
+
+ALTERNATIVE: Use GitLab with Render
+1. Push your code to GitLab
+2. Go to https://render.com
+3. Connect your GitLab repository
+4. Deploy as a Web Service
+5. Get a custom URL like: https://your-app.onrender.com
+
+✅ NO PASSCODE REQUIRED!
+✅ FREE HOSTING!
+✅ AUTOMATIC DEPLOYMENT!

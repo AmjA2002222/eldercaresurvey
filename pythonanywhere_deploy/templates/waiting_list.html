@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElderCareSurvey - Waiting List</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .language-selector select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .language-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .title-section {
+            flex: 1;
+            text-align: center;
+        }
+        .inline-language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .inline-language-selector select {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+        .inline-language-selector .language-icon {
+            font-size: 16px;
+            color: #3498db;
+        }
+        /* Hide Google Translate branding */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        .goog-te-menu-value {
+            display: none !important;
+        }
+        .goog-te-gadget {
+            display: none !important;
+        }
+        .goog-te-combo {
+            display: none !important;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .stat-box {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-style: italic;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .interest-5 { color: #27ae60; font-weight: bold; }
+        .interest-4 { color: #f39c12; font-weight: bold; }
+        .interest-3 { color: #3498db; font-weight: bold; }
+        .interest-2 { color: #e67e22; font-weight: bold; }
+        .interest-1 { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Survey</a>
+        <div class="header-container">
+            <div class="title-section">
+                <h1>ElderCareSurvey - Waiting List</h1>
+            </div>
+            <div class="inline-language-selector">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="ar">العربية</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="survey-info" style="background-color: #f8f9fa; border: 2px solid #007bff; border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center;">
+            <h4 style="color: #007bff; margin-top: 0;">👴👵 Elderly People Interested in Talking Companion</h4>
+            <p style="color: #495057; margin-bottom: 0; font-size: 14px;">
+                This list shows elderly people (60+) who are interested in trying our talking companion technology.
+            </p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">{{ people|length }}</div>
+                <div class="stat-label">Total People</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ people|selectattr('1', 'equalto', '60-69')|list|length }}</div>
+                <div class="stat-label">Ages 60-69</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ people|selectattr('1', 'equalto', '70-79')|list|length }}</div>
+                <div class="stat-label">Ages 70-79</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ people|selectattr('1', 'equalto', '80-89')|list|length }}</div>
+                <div class="stat-label">Ages 80-89</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ people|selectattr('1', 'equalto', '90+')|list|length }}</div>
+                <div class="stat-label">Ages 90+</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ people|selectattr('3', 'equalto', '5')|list|length }}</div>
+                <div class="stat-label">Very Interested (5)</div>
+            </div>
+        </div>
+        
+        {% if people %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age Group</th>
+                    <th>Needs Help With</th>
+                    <th>Interest Level</th>
+                    <th>Contact Info</th>
+                    <th>Added Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in people %}
+                <tr>
+                    <td>{{ person[0] or 'Not provided' }}</td>
+                    <td>{{ person[1] }}</td>
+                    <td>{{ person[2] }}</td>
+                    <td>
+                        {% if person[3] %}
+                            <span class="interest-{{ person[3] }}">{{ person[3] }}/5</span>
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if person[4] %}
+                            Email: {{ person[4] }}<br>
+                        {% endif %}
+                        {% if person[5] %}
+                            Phone: {{ person[5] }}<br>
+                        {% endif %}
+                        {% if person[6] %}
+                            Preferred: {{ person[6] }}
+                        {% endif %}
+                    </td>
+                    <td>{{ person[7] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-data">
+            <h3>No one has joined the waiting list yet.</h3>
+            <p>When people complete the survey and show interest in trying the talking companion, they will appear here.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Google Translate Integration
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr,ar,es,de,it,pt,ru,ja,ko,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+        
+        // Load Google Translate script
+        var script = document.createElement('script');
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.head.appendChild(script);
+        
+        // Custom language change function
+        function changeLanguage(langCode) {
+            // Wait for Google Translate to load
+            var checkExist = setInterval(function() {
+                if (window.google && window.google.translate) {
+                    // Create a hidden div for Google Translate if it doesn't exist
+                    var translateDiv = document.getElementById('google_translate_element');
+                    if (!translateDiv) {
+                        translateDiv = document.createElement('div');
+                        translateDiv.id = 'google_translate_element';
+                        translateDiv.style.display = 'none';
+                        document.body.appendChild(translateDiv);
+                        
+                        // Initialize Google Translate
+                        new google.translate.TranslateElement({
+                            pageLanguage: 'en',
+                            includedLanguages: 'en,fr,ar,es,de,it,pt,ru,ja,ko,zh-CN',
+                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            autoDisplay: false
+                        }, 'google_translate_element');
+                    }
+                    
+                    // Wait a bit more for the widget to be ready
+                    setTimeout(function() {
+                        var select = document.querySelector('.goog-te-combo');
+                        if (select) {
+                            select.value = langCode;
+                            select.dispatchEvent(new Event('change'));
+                            clearInterval(checkExist);
+                        }
+                    }, 500);
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html> 
