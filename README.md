@@ -18,8 +18,8 @@ A multilingual survey application designed to gather insights from seniors about
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/eldercare-survey.git
-   cd eldercare-survey
+   git clone https://github.com/yourusername/eldercaresurvey.git
+   cd eldercaresurvey
    ```
 
 2. **Install dependencies**

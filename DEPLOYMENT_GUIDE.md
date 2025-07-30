@@ -17,13 +17,13 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 1. **Create a new repository on GitHub:**
    - Go to [github.com](https://github.com)
    - Click "New repository"
-   - Name it: `eldercare-survey`
+   - Name it: `eldercaresurvey`
    - Make it **Public**
    - Don't initialize with README (we already have one)
 
 2. **Push your code to GitHub:**
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/eldercare-survey.git
+   git remote add origin https://github.com/YOUR_USERNAME/eldercaresurvey.git
    git branch -M main
    git push -u origin main
    ```
@@ -37,10 +37,10 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 2. **Create a new Web Service:**
    - Click "New +" → "Web Service"
    - Connect your GitHub repository
-   - Select the `eldercare-survey` repository
+   - Select the `eldercaresurvey` repository
 
 3. **Configure the service:**
-   - **Name**: `eldercare-survey`
+   - **Name**: `eldercaresurvey`
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `gunicorn app:app`
@@ -60,7 +60,7 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 2. **Deploy:**
    - Click "New Project"
    - Select "Deploy from GitHub repo"
-   - Choose your `eldercare-survey` repository
+   - Choose your `eldercaresurvey` repository
    - Railway will automatically detect it's a Python app
    - Your survey will be live at: `https://your-app-name.railway.app`
 
@@ -81,7 +81,7 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 3. **Deploy:**
    ```bash
    heroku login
-   heroku create your-app-name
+   heroku create eldercaresurvey
    git push heroku main
    ```
 
