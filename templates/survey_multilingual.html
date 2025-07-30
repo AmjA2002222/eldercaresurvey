@@ -19,35 +19,7 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .language-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .language-selector select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: white;
-            cursor: pointer;
-        }
-        .language-selector select:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-        .language-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-            text-align: center;
-        }
+
         h1 {
             color: #2c3e50;
             text-align: center;
@@ -187,15 +159,7 @@
     </style>
 </head>
 <body dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <div class="language-label">{{ t('language_selector') }}</div>
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
-            <option value="en" {{ 'selected' if lang == 'en' else '' }}>English</option>
-            <option value="fr" {{ 'selected' if lang == 'fr' else '' }}>Français</option>
-            <option value="ar" {{ 'selected' if lang == 'ar' else '' }}>العربية</option>
-        </select>
-    </div>
+
 
     <div class="container">
         <h1>{{ t('title') }}</h1>
@@ -474,16 +438,6 @@
     </div>
 
     <script>
-        function changeLanguage(lang) {
-            fetch(`/set-language/${lang}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        window.location.reload();
-                    }
-                });
-        }
-
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             

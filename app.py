@@ -55,12 +55,7 @@ def index():
     lang = session.get('lang', 'en')
     return render_template('survey_multilingual.html', lang=lang, t=lambda key: get_translation(lang, key))
 
-@app.route('/set-language/<lang>')
-def set_language(lang):
-    """Set the language for the session"""
-    if lang in ['en', 'fr', 'ar']:
-        session['lang'] = lang
-    return jsonify({"status": "success", "language": lang})
+
 
 @app.route('/waiting-list')
 def waiting_list():
