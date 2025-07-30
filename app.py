@@ -28,7 +28,10 @@ def init_db():
             contact_name TEXT,
             contact_email TEXT,
             contact_phone TEXT,
-            contact_preference TEXT
+            contact_preference TEXT,
+            social_contact TEXT,
+            lonely_feel TEXT,
+            lonely_frequency TEXT
         )
     ''')
     
@@ -55,7 +58,12 @@ def index():
     lang = session.get('lang', 'en')
     return render_template('survey_multilingual.html', lang=lang, t=lambda key: get_translation(lang, key))
 
-
+@app.route('/set-language/<lang>')
+def set_language(lang):
+    """Set the language for the session"""
+    if lang in ['en', 'fr', 'ar']:
+        session['lang'] = lang
+    return jsonify({"status": "success", "language": lang})
 
 @app.route('/waiting-list')
 def waiting_list():
@@ -87,6 +95,9 @@ def submit():
     contact_email = data.get('contact_email', '')
     contact_phone = data.get('contact_phone', '')
     contact_preference = data.get('contact_preference', '')
+    social_contact = data.get('social_contact', '')
+    lonely_feel = data.get('lonely_feel', '')
+    lonely_frequency = data.get('lonely_frequency', '')
 
     conn = sqlite3.connect('survey.db')
     c = conn.cursor()
@@ -95,13 +106,15 @@ def submit():
             age_group, uses_digital_assistant, difficulty_using_tech,
             interest_in_ai, helpful_features, comfort_with_ai_voice,
             concerns, trial_participation, willingness_to_pay, interest_level,
-            additional_comments, contact_name, contact_email, contact_phone, contact_preference
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            additional_comments, contact_name, contact_email, contact_phone, contact_preference,
+            social_contact, lonely_feel, lonely_frequency
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         age_group, uses_digital_assistant, difficulty_using_tech,
         interest_in_ai, helpful_features, comfort_with_ai_voice,
         concerns, trial_participation, willingness_to_pay, interest_level,
-        additional_comments, contact_name, contact_email, contact_phone, contact_preference
+        additional_comments, contact_name, contact_email, contact_phone, contact_preference,
+        social_contact, lonely_feel, lonely_frequency
     ))
     conn.commit()
     conn.close()
