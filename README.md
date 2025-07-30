@@ -1,4 +1,4 @@
-# ElderCare Survey
+# eldercaresurvey
 
 A multilingual survey application designed to gather insights from seniors about their interest in digital assistant technology.
 
