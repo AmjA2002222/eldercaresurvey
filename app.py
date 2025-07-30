@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session
 import sqlite3
 import os
 from pyngrok import ngrok
+from translations import get_translation
 
 app = Flask(__name__)
+app.secret_key = 'eldercare_survey_secret_key_2024'
 
 # Initialize database and table
 def init_db():
@@ -49,7 +51,16 @@ def init_db():
 
 @app.route('/')
 def index():
-    return render_template('survey.html')
+    # Get language from session or default to English
+    lang = session.get('lang', 'en')
+    return render_template('survey_multilingual.html', lang=lang, t=lambda key: get_translation(lang, key))
+
+@app.route('/set-language/<lang>')
+def set_language(lang):
+    """Set the language for the session"""
+    if lang in ['en', 'fr', 'ar']:
+        session['lang'] = lang
+    return jsonify({"status": "success", "language": lang})
 
 @app.route('/waiting-list')
 def waiting_list():
@@ -60,46 +71,6 @@ def waiting_list():
     conn.close()
     
     return render_template('waiting_list.html', people=people)
-
-@app.route('/database')
-def database():
-    """View all survey responses"""
-    conn = sqlite3.connect('survey.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM responses ORDER BY id DESC')
-    responses = c.fetchall()
-    
-    # Get column names
-    c.execute('PRAGMA table_info(responses)')
-    columns = [column[1] for column in c.fetchall()]
-    
-    conn.close()
-    
-    return render_template('database.html', responses=responses, columns=columns)
-
-@app.route('/api/responses')
-def api_responses():
-    """API endpoint to get all responses as JSON"""
-    conn = sqlite3.connect('survey.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM responses ORDER BY id DESC')
-    responses = c.fetchall()
-    
-    # Get column names
-    c.execute('PRAGMA table_info(responses)')
-    columns = [column[1] for column in c.fetchall()]
-    
-    conn.close()
-    
-    # Convert to list of dictionaries
-    data = []
-    for response in responses:
-        row_dict = {}
-        for i, column in enumerate(columns):
-            row_dict[column] = response[i]
-        data.append(row_dict)
-    
-    return jsonify(data)
 
 @app.route('/submit', methods=['POST'])
 def submit():
