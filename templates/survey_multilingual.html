@@ -434,38 +434,7 @@
                 </div>
             </div>
 
-            <!-- Interest Level -->
-            <div class="question">
-                <h3>{{ t('interest_level') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="interest_1" name="interest_level" value="1">
-                        <label for="interest_1">1 - {{ t('not_interested') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="interest_2" name="interest_level" value="2">
-                        <label for="interest_2">2 - {{ t('somewhat_interested') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="interest_3" name="interest_level" value="3">
-                        <label for="interest_3">3 - {{ t('interested') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="interest_4" name="interest_level" value="4">
-                        <label for="interest_4">4 - {{ t('very_interested') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="interest_5" name="interest_level" value="5">
-                        <label for="interest_5">5 - {{ t('very_interested') }}</label>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Additional Comments -->
-            <div class="question">
-                <h3>{{ t('additional_comments') }}</h3>
-                <textarea name="additional_comments" placeholder="{{ t('comments_placeholder') }}"></textarea>
-            </div>
 
             <!-- Social Contact -->
             <div class="question">
@@ -548,7 +517,38 @@
                 </div>
             </div>
 
+            <!-- Interest Level -->
+            <div class="question">
+                <h3>{{ t('interest_level') }}</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="interest_1" name="interest_level" value="1">
+                        <label for="interest_1">1 - {{ t('not_interested') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_2" name="interest_level" value="2">
+                        <label for="interest_2">2 - {{ t('somewhat_interested') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_3" name="interest_level" value="3">
+                        <label for="interest_3">3 - {{ t('interested') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_4" name="interest_level" value="4">
+                        <label for="interest_4">4 - {{ t('very_interested') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_5" name="interest_level" value="5">
+                        <label for="interest_5">5 - {{ t('very_interested') }}</label>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Additional Comments -->
+            <div class="question">
+                <h3>{{ t('additional_comments') }}</h3>
+                <textarea name="additional_comments" placeholder="{{ t('comments_placeholder') }}"></textarea>
+            </div>
 
             <button type="submit" class="submit-btn">{{ t('submit') }}</button>
         </form>
