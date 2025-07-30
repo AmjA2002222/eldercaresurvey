@@ -6,9 +6,9 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 
 1. **GitHub Account** - Create one at [github.com](https://github.com)
 2. **Deployment Platform Account** - Choose one:
-   - **Render** (Recommended): [render.com](https://render.com)
-   - **Railway**: [railway.app](https://railway.app)
-   - **Heroku**: [heroku.com](https://heroku.com)
+   - **Railway** (Recommended - No Sleep): [railway.app](https://railway.app)
+- **Render**: [render.com](https://render.com) (Free tier sleeps after inactivity)
+- **Heroku**: [heroku.com](https://heroku.com)
 
 ## 🎯 Step-by-Step Deployment
 
@@ -28,7 +28,20 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    git push -u origin main
    ```
 
-### Step 2: Deploy to Render (Recommended)
+### Step 2: Deploy to Railway (Recommended - No Sleep)
+
+1. **Sign up at Railway.app**
+   - Go to [railway.app](https://railway.app)
+   - Sign up with your GitHub account
+
+2. **Deploy:**
+   - Click "New Project"
+   - Select "Deploy from GitHub repo"
+   - Choose your `eldercaresurvey` repository
+   - Railway will automatically detect it's a Python app
+   - Your survey will be live at: `https://your-app-name.railway.app`
+
+### Step 3: Deploy to Render (Alternative - Free tier sleeps after inactivity)
 
 1. **Sign up at Render.com**
    - Go to [render.com](https://render.com)
@@ -44,14 +57,14 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `gunicorn app:app`
-   - **Plan**: Free
+   - **Plan**: Free (⚠️ Note: Free tier sleeps after 15 minutes of inactivity)
 
 4. **Deploy:**
    - Click "Create Web Service"
    - Wait for deployment (2-3 minutes)
    - Your survey will be live at: `https://your-app-name.onrender.com`
 
-### Step 3: Deploy to Railway (Alternative)
+### Step 4: Deploy to Railway (Alternative)
 
 1. **Sign up at Railway.app**
    - Go to [railway.app](https://railway.app)
@@ -64,7 +77,7 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    - Railway will automatically detect it's a Python app
    - Your survey will be live at: `https://your-app-name.railway.app`
 
-### Step 4: Deploy to Heroku (Alternative)
+### Step 5: Deploy to Heroku (Alternative)
 
 1. **Sign up at Heroku.com**
    - Go to [heroku.com](https://heroku.com)

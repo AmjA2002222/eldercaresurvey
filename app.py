@@ -172,15 +172,13 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
     
     print('=' * 50)
-    print('🚀 ElderCareSurvey is starting...')
+    print('🚀 ElderCare Survey is starting...')
     print('=' * 50)
     print(f'📱 Local URL: http://localhost:{port}')
     print(f'🌐 Network URL: http://0.0.0.0:{port}')
     print('=' * 50)
-    print('💡 To make it public worldwide:')
-    print('   1. Deploy to Render: https://render.com')
-    print('   2. Deploy to Railway: https://railway.app')
-    print('   3. Deploy to Heroku: https://heroku.com')
+    print('✅ Survey is ready!')
+    print('📊 View results at: /waiting-list')
     print('=' * 50)
     
     # Use debug=False for production
