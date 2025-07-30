@@ -28,9 +28,7 @@ def init_db():
             contact_name TEXT,
             contact_email TEXT,
             contact_phone TEXT,
-            contact_preference TEXT,
-            social_connections TEXT,
-            loneliness TEXT
+            contact_preference TEXT
         )
     ''')
     
@@ -45,8 +43,6 @@ def init_db():
             contact_email TEXT,
             contact_phone TEXT,
             contact_preference TEXT,
-            social_connections TEXT,
-            loneliness TEXT,
             added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -91,8 +87,6 @@ def submit():
     contact_email = data.get('contact_email', '')
     contact_phone = data.get('contact_phone', '')
     contact_preference = data.get('contact_preference', '')
-    social_connections = data.get('social_connections', '')
-    loneliness = data.get('loneliness', '')
 
     conn = sqlite3.connect('survey.db')
     c = conn.cursor()
@@ -101,15 +95,13 @@ def submit():
             age_group, uses_digital_assistant, difficulty_using_tech,
             interest_in_ai, helpful_features, comfort_with_ai_voice,
             concerns, trial_participation, willingness_to_pay, interest_level,
-            additional_comments, contact_name, contact_email, contact_phone, contact_preference,
-            social_connections, loneliness
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            additional_comments, contact_name, contact_email, contact_phone, contact_preference
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         age_group, uses_digital_assistant, difficulty_using_tech,
         interest_in_ai, helpful_features, comfort_with_ai_voice,
         concerns, trial_participation, willingness_to_pay, interest_level,
-        additional_comments, contact_name, contact_email, contact_phone, contact_preference,
-        social_connections, loneliness
+        additional_comments, contact_name, contact_email, contact_phone, contact_preference
     ))
     conn.commit()
     conn.close()
@@ -124,9 +116,9 @@ def submit():
         wants_help_with = ', '.join(helpful_features_list) if helpful_features_list else 'Not specified'
         
         c.execute('''
-            INSERT INTO waiting_list (name, age_group, wants_help_with, interest_level, contact_email, contact_phone, contact_preference, social_connections, loneliness)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (contact_name, age_group, wants_help_with, interest_level, contact_email, contact_phone, contact_preference, social_connections, loneliness))
+            INSERT INTO waiting_list (name, age_group, wants_help_with, interest_level, contact_email, contact_phone, contact_preference)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (contact_name, age_group, wants_help_with, interest_level, contact_email, contact_phone, contact_preference))
         conn.commit()
         conn.close()
 

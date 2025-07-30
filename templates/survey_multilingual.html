@@ -98,17 +98,12 @@
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            font-size: 14px;
+            box-sizing: border-box;
         }
         textarea {
+            height: 100px;
             resize: vertical;
-            min-height: 100px;
         }
         .submit-btn {
             background-color: #3498db;
@@ -116,17 +111,16 @@
             padding: 15px 30px;
             border: none;
             border-radius: 5px;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             width: 100%;
             margin-top: 20px;
-            transition: background-color 0.2s;
         }
         .submit-btn:hover {
             background-color: #2980b9;
         }
         .submit-btn:disabled {
-            background-color: #bdc3c7;
+            background-color: #95a5a6;
             cursor: not-allowed;
         }
         .success-message {
@@ -134,65 +128,50 @@
             color: #155724;
             padding: 15px;
             border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
+            margin-top: 20px;
         }
         .error-message {
             background-color: #f8d7da;
             color: #721c24;
             padding: 15px;
             border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        /* RTL support for Arabic */
-        [dir="rtl"] {
-            text-align: right;
-        }
-        [dir="rtl"] .radio-option, [dir="rtl"] .checkbox-option {
-            flex-direction: row-reverse;
-        }
-        [dir="rtl"] input[type="radio"], [dir="rtl"] input[type="checkbox"] {
-            margin-left: 10px;
-            margin-right: 0;
+            margin-top: 20px;
         }
     </style>
 </head>
-<body dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
-
-
+<body>
     <div class="container">
         <h1>{{ t('title') }}</h1>
         <div class="welcome-text">
             <p>{{ t('welcome') }}</p>
             <p>{{ t('intro') }}</p>
         </div>
-
+        
         <form id="surveyForm">
             <!-- Age Group -->
             <div class="question">
                 <h3>{{ t('age_group') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="age_under_50" name="age_group" value="under_50">
-                        <label for="age_under_50">{{ t('age_under_50') }}</label>
+                        <input type="radio" id="age_60_69" name="age_group" value="60-69">
+                        <label for="age_60_69">{{ t('age_60_69') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_50_65" name="age_group" value="50_65">
-                        <label for="age_50_65">{{ t('age_50_65') }}</label>
+                        <input type="radio" id="age_70_79" name="age_group" value="70-79">
+                        <label for="age_70_79">{{ t('age_70_79') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_65_75" name="age_group" value="65_75">
-                        <label for="age_65_75">{{ t('age_65_75') }}</label>
+                        <input type="radio" id="age_80_89" name="age_group" value="80-89">
+                        <label for="age_80_89">{{ t('age_80_89') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_over_75" name="age_group" value="over_75">
-                        <label for="age_over_75">{{ t('age_over_75') }}</label>
+                        <input type="radio" id="age_90_plus" name="age_group" value="90+">
+                        <label for="age_90_plus">{{ t('age_90_plus') }}</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Digital Assistant Usage -->
+            <!-- Digital Assistant -->
             <div class="question">
                 <h3>{{ t('digital_assistant') }}</h3>
                 <div class="radio-group">
@@ -212,23 +191,23 @@
                 <h3>{{ t('difficulty_tech') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="difficulty_1" name="difficulty_using_tech" value="1">
+                        <input type="radio" id="difficulty_1" name="difficulty_using_tech" value="Very Easy">
                         <label for="difficulty_1">{{ t('very_easy') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="difficulty_2" name="difficulty_using_tech" value="2">
-                        <label for="difficulty_2">{{ t('easy') }}</label>
+                        <input type="radio" id="difficulty_2" name="difficulty_using_tech" value="Somewhat Easy">
+                        <label for="difficulty_2">{{ t('somewhat_easy') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="difficulty_3" name="difficulty_using_tech" value="3">
+                        <input type="radio" id="difficulty_3" name="difficulty_using_tech" value="Neutral">
                         <label for="difficulty_3">{{ t('neutral') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="difficulty_4" name="difficulty_using_tech" value="4">
-                        <label for="difficulty_4">{{ t('difficult') }}</label>
+                        <input type="radio" id="difficulty_4" name="difficulty_using_tech" value="Somewhat Difficult">
+                        <label for="difficulty_4">{{ t('somewhat_difficult') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="difficulty_5" name="difficulty_using_tech" value="5">
+                        <input type="radio" id="difficulty_5" name="difficulty_using_tech" value="Very Difficult">
                         <label for="difficulty_5">{{ t('very_difficult') }}</label>
                     </div>
                 </div>
@@ -237,22 +216,27 @@
             <!-- Interest in AI -->
             <div class="question">
                 <h3>{{ t('interest_ai') }}</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">{{ t('interest_ai_desc') }}</p>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="interest_1" name="interest_in_ai" value="1">
-                        <label for="interest_1">{{ t('not_interested') }}</label>
+                        <input type="radio" id="interest_1" name="interest_in_ai" value="Yes, very much">
+                        <label for="interest_1">{{ t('yes_very_much') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="interest_2" name="interest_in_ai" value="2">
-                        <label for="interest_2">{{ t('somewhat_interested') }}</label>
+                        <input type="radio" id="interest_2" name="interest_in_ai" value="Maybe, sounds interesting">
+                        <label for="interest_2">{{ t('maybe_sounds_interesting') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="interest_3" name="interest_in_ai" value="3">
-                        <label for="interest_3">{{ t('interested') }}</label>
+                        <input type="radio" id="interest_3" name="interest_in_ai" value="Not sure">
+                        <label for="interest_3">{{ t('not_sure') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="interest_4" name="interest_in_ai" value="4">
-                        <label for="interest_4">{{ t('very_interested') }}</label>
+                        <input type="radio" id="interest_4" name="interest_in_ai" value="Probably not">
+                        <label for="interest_4">{{ t('probably_not') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_5" name="interest_in_ai" value="No, not interested">
+                        <label for="interest_5">{{ t('no_not_interested') }}</label>
                     </div>
                 </div>
             </div>
@@ -262,59 +246,42 @@
                 <h3>{{ t('helpful_features') }}</h3>
                 <div class="checkbox-group">
                     <div class="checkbox-option">
-                        <input type="checkbox" id="feature_reminders" name="helpful_features" value="reminders">
+                        <input type="checkbox" id="feature_reminders" name="helpful_features" value="Remembering to take medicine">
                         <label for="feature_reminders">{{ t('reminders') }}</label>
                     </div>
                     <div class="checkbox-option">
-                        <input type="checkbox" id="feature_conversation" name="helpful_features" value="conversation">
-                        <label for="feature_conversation">{{ t('conversation') }}</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="feature_health" name="helpful_features" value="health_monitoring">
-                        <label for="feature_health">{{ t('health_monitoring') }}</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="feature_emergency" name="helpful_features" value="emergency_help">
+                        <input type="checkbox" id="feature_emergency" name="helpful_features" value="Getting help if I fall or feel unwell">
                         <label for="feature_emergency">{{ t('emergency_help') }}</label>
                     </div>
                     <div class="checkbox-option">
-                        <input type="checkbox" id="feature_entertainment" name="helpful_features" value="entertainment">
+                        <input type="checkbox" id="feature_social" name="helpful_features" value="Feeling lonely or wanting someone to talk to">
+                        <label for="feature_social">{{ t('social_companionship') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_health" name="helpful_features" value="Keeping track of my health">
+                        <label for="feature_health">{{ t('health_monitoring') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_entertainment" name="helpful_features" value="Finding things to do or watch">
                         <label for="feature_entertainment">{{ t('entertainment') }}</label>
                     </div>
-                </div>
-            </div>
-
-            <!-- AI Voice Comfort -->
-            <div class="question">
-                <h3>{{ t('ai_voice') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="voice_1" name="comfort_with_ai_voice" value="1">
-                        <label for="voice_1">{{ t('very_uncomfortable') }}</label>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_assistance" name="helpful_features" value="Daily tasks like cooking or cleaning">
+                        <label for="feature_assistance">{{ t('daily_tasks') }}</label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="voice_2" name="comfort_with_ai_voice" value="2">
-                        <label for="voice_2">{{ t('uncomfortable') }}</label>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_memory" name="helpful_features" value="Remembering appointments or important dates">
+                        <label for="feature_memory">{{ t('appointments') }}</label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="voice_3" name="comfort_with_ai_voice" value="3">
-                        <label for="voice_3">{{ t('neutral_comfort') }}</label>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_communication" name="helpful_features" value="Staying in touch with family">
+                        <label for="feature_communication">{{ t('family_contact') }}</label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="voice_4" name="comfort_with_ai_voice" value="4">
-                        <label for="voice_4">{{ t('comfortable') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="voice_5" name="comfort_with_ai_voice" value="5">
-                        <label for="voice_5">{{ t('very_comfortable') }}</label>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="feature_none" name="helpful_features" value="None of the above">
+                        <label for="feature_none">{{ t('none_above') }}</label>
                     </div>
                 </div>
-            </div>
-
-            <!-- Concerns -->
-            <div class="question">
-                <h3>{{ t('concerns') }}</h3>
-                <textarea name="concerns" placeholder="{{ t('concerns_placeholder') }}"></textarea>
             </div>
 
             <!-- Trial Participation -->
@@ -322,16 +289,75 @@
                 <h3>{{ t('trial_participation') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="trial_yes" name="trial_participation" value="yes">
+                        <input type="radio" id="trial_yes" name="trial_participation" value="Yes">
                         <label for="trial_yes">{{ t('yes') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="trial_maybe" name="trial_participation" value="maybe">
-                        <label for="trial_maybe">{{ t('maybe') }}</label>
+                        <input type="radio" id="trial_no" name="trial_participation" value="No">
+                        <label for="trial_no">{{ t('no') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="trial_no" name="trial_participation" value="no">
-                        <label for="trial_no">{{ t('no') }}</label>
+                        <input type="radio" id="trial_maybe" name="trial_participation" value="Maybe">
+                        <label for="trial_maybe">{{ t('maybe') }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Voice Comfort -->
+            <div class="question">
+                <h3>{{ t('ai_voice') }}</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">{{ t('ai_voice_desc') }}</p>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="voice_1" name="comfort_with_ai_voice" value="I'd be fine with it">
+                        <label for="voice_1">{{ t('fine_with_it') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="voice_2" name="comfort_with_ai_voice" value="I think I could get used to it">
+                        <label for="voice_2">{{ t('could_get_used_to_it') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="voice_3" name="comfort_with_ai_voice" value="I'm not sure">
+                        <label for="voice_3">{{ t('not_sure') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="voice_4" name="comfort_with_ai_voice" value="It might feel strange">
+                        <label for="voice_4">{{ t('might_feel_strange') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="voice_5" name="comfort_with_ai_voice" value="I wouldn't like it">
+                        <label for="voice_5">{{ t('wouldnt_like_it') }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Concerns -->
+            <div class="question">
+                <h3>{{ t('concerns') }}</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_privacy" name="concerns" value="Privacy">
+                        <label for="concern_privacy">{{ t('privacy') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_cost" name="concerns" value="Cost">
+                        <label for="concern_cost">{{ t('cost') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_reliability" name="concerns" value="Reliability">
+                        <label for="concern_reliability">{{ t('reliability') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_complexity" name="concerns" value="Complexity">
+                        <label for="concern_complexity">{{ t('complexity') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_safety" name="concerns" value="Safety">
+                        <label for="concern_safety">{{ t('safety') }}</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="concern_none" name="concerns" value="No Concerns">
+                        <label for="concern_none">{{ t('no_concerns') }}</label>
                     </div>
                 </div>
             </div>
@@ -341,20 +367,24 @@
                 <h3>{{ t('willingness_pay') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="pay_free" name="willingness_to_pay" value="free">
+                        <input type="radio" id="pay_free" name="willingness_to_pay" value="Free">
                         <label for="pay_free">{{ t('free') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="pay_low" name="willingness_to_pay" value="low_cost">
-                        <label for="pay_low">{{ t('low_cost') }}</label>
+                        <input type="radio" id="pay_10" name="willingness_to_pay" value="$1-10">
+                        <label for="pay_10">{{ t('low_cost') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="pay_moderate" name="willingness_to_pay" value="moderate_cost">
-                        <label for="pay_moderate">{{ t('moderate_cost') }}</label>
+                        <input type="radio" id="pay_25" name="willingness_to_pay" value="$11-25">
+                        <label for="pay_25">{{ t('moderate_cost') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="pay_premium" name="willingness_to_pay" value="premium_cost">
-                        <label for="pay_premium">{{ t('premium_cost') }}</label>
+                        <input type="radio" id="pay_50" name="willingness_to_pay" value="$26-50">
+                        <label for="pay_50">{{ t('high_cost') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_more" name="willingness_to_pay" value="$50+">
+                        <label for="pay_more">{{ t('premium_cost') }}</label>
                     </div>
                 </div>
             </div>
@@ -365,77 +395,23 @@
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="interest_1" name="interest_level" value="1">
-                        <label for="interest_1">1 - {{ t('not_interested') }}</label>
+                        <label for="interest_1">{{ t('not_interested_at_all') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_2" name="interest_level" value="2">
-                        <label for="interest_2">2 - {{ t('somewhat_interested') }}</label>
+                        <label for="interest_2">{{ t('slightly_interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_3" name="interest_level" value="3">
-                        <label for="interest_3">3 - {{ t('interested') }}</label>
+                        <label for="interest_3">{{ t('somewhat_interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_4" name="interest_level" value="4">
-                        <label for="interest_4">4 - {{ t('very_interested') }}</label>
+                        <label for="interest_4">{{ t('interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_5" name="interest_level" value="5">
-                        <label for="interest_5">5 - {{ t('very_interested') }}</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Social Connections -->
-            <div class="question">
-                <h3>{{ t('social_connections') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="see_daily" name="social_connections" value="daily">
-                        <label for="see_daily">{{ t('see_daily') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="see_weekly" name="social_connections" value="weekly">
-                        <label for="see_weekly">{{ t('see_weekly') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="see_monthly" name="social_connections" value="monthly">
-                        <label for="see_monthly">{{ t('see_monthly') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="see_rarely" name="social_connections" value="rarely">
-                        <label for="see_rarely">{{ t('see_rarely') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="see_never" name="social_connections" value="never">
-                        <label for="see_never">{{ t('see_never') }}</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Loneliness -->
-            <div class="question">
-                <h3>{{ t('loneliness') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="lonely_never" name="loneliness" value="never">
-                        <label for="lonely_never">{{ t('lonely_never') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="lonely_rarely" name="loneliness" value="rarely">
-                        <label for="lonely_rarely">{{ t('lonely_rarely') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="lonely_sometimes" name="loneliness" value="sometimes">
-                        <label for="lonely_sometimes">{{ t('lonely_sometimes') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="lonely_often" name="loneliness" value="often">
-                        <label for="lonely_often">{{ t('lonely_often') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="lonely_always" name="loneliness" value="always">
-                        <label for="lonely_always">{{ t('lonely_always') }}</label>
+                        <label for="interest_5">{{ t('very_interested') }}</label>
                     </div>
                 </div>
             </div>
@@ -478,8 +454,8 @@
                             <label for="pref_phone">{{ t('pref_phone') }}</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="pref_text" name="contact_preference" value="Text">
-                            <label for="pref_text">{{ t('pref_text') }}</label>
+                            <input type="radio" id="pref_either" name="contact_preference" value="Either">
+                            <label for="pref_either">{{ t('pref_either') }}</label>
                         </div>
                     </div>
                 </div>
