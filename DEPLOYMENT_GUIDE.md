@@ -6,7 +6,8 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
 
 1. **GitHub Account** - Create one at [github.com](https://github.com)
 2. **Deployment Platform Account** - Choose one:
-   - **Railway** (Recommended - No Sleep): [railway.app](https://railway.app)
+   - **PythonAnywhere** (Recommended - Free Forever): [pythonanywhere.com](https://pythonanywhere.com)
+- **Railway**: [railway.app](https://railway.app) (Has usage limits)
 - **Render**: [render.com](https://render.com) (Free tier sleeps after inactivity)
 - **Heroku**: [heroku.com](https://heroku.com)
 
@@ -28,7 +29,20 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    git push -u origin main
    ```
 
-### Step 2: Deploy to Railway (Recommended - No Sleep)
+### Step 2: Deploy to PythonAnywhere (Recommended - Free Forever)
+
+1. **Sign up at PythonAnywhere**
+   - Go to [pythonanywhere.com](https://pythonanywhere.com)
+   - Sign up for a free account
+
+2. **Deploy:**
+   - Go to "Web" tab
+   - Click "Add a new web app"
+   - Choose "Flask" and "Python 3.9"
+   - Upload your files or connect to GitHub
+   - Your survey will be live at: `https://yourusername.pythonanywhere.com`
+
+### Step 3: Deploy to Railway (Alternative - Has usage limits)
 
 1. **Sign up at Railway.app**
    - Go to [railway.app](https://railway.app)
@@ -40,6 +54,7 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    - Choose your `eldercaresurvey` repository
    - Railway will automatically detect it's a Python app
    - Your survey will be live at: `https://your-app-name.railway.app`
+   - ⚠️ Note: Free tier has usage limits
 
 ### Step 3: Deploy to Render (Alternative - Free tier sleeps after inactivity)
 
@@ -64,7 +79,7 @@ This guide will help you deploy your ElderCare Survey to make it publicly access
    - Wait for deployment (2-3 minutes)
    - Your survey will be live at: `https://your-app-name.onrender.com`
 
-### Step 4: Deploy to Railway (Alternative)
+### Step 4: Deploy to Railway (Alternative - Has usage limits)
 
 1. **Sign up at Railway.app**
    - Go to [railway.app](https://railway.app)
