@@ -197,28 +197,32 @@
         
         <div class="stats">
             <div class="stat-box">
-                <div class="stat-number">{{ people|length }}</div>
+                <div class="stat-number">{{ stats.total_people }}</div>
                 <div class="stat-label">Total People</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">{{ people|selectattr('1', 'equalto', '60-69')|list|length }}</div>
-                <div class="stat-label">Ages 60-69</div>
+                <div class="stat-number">{{ stats.age_60_70 }}</div>
+                <div class="stat-label">Ages 60-70</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">{{ people|selectattr('1', 'equalto', '70-79')|list|length }}</div>
-                <div class="stat-label">Ages 70-79</div>
+                <div class="stat-number">{{ stats.age_70_80 }}</div>
+                <div class="stat-label">Ages 70-80</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">{{ people|selectattr('1', 'equalto', '80-89')|list|length }}</div>
-                <div class="stat-label">Ages 80-89</div>
+                <div class="stat-number">{{ stats.age_over_80 }}</div>
+                <div class="stat-label">Ages 80+</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">{{ people|selectattr('1', 'equalto', '90+')|list|length }}</div>
-                <div class="stat-label">Ages 90+</div>
+                <div class="stat-number">{{ stats.age_under_60 }}</div>
+                <div class="stat-label">Under 60</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number">{{ people|selectattr('3', 'equalto', '5')|list|length }}</div>
-                <div class="stat-label">Very Interested (5)</div>
+                <div class="stat-number">{{ stats.interested }}</div>
+                <div class="stat-label">Interested (3+4+5)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ stats.not_interested }}</div>
+                <div class="stat-label">Not Interested (1+2)</div>
             </div>
         </div>
         

@@ -187,28 +187,36 @@
     </style>
 </head>
 <body dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <div class="language-label">{{ t('language_selector') }}</div>
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
-            <option value="en" {{ 'selected' if lang == 'en' else '' }}>English</option>
-            <option value="fr" {{ 'selected' if lang == 'fr' else '' }}>Français</option>
-            <option value="ar" {{ 'selected' if lang == 'ar' else '' }}>العربية</option>
-        </select>
-    </div>
+
 
     <div class="container">
-        <h1>{{ t('title') }}</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="margin: 0;">{{ t('title') }}</h1>
+            <div class="language-selector" style="position: static; box-shadow: none; border: 1px solid #ddd;">
+                <div class="language-label">{{ t('language_selector') }}</div>
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en" {{ 'selected' if lang == 'en' else '' }}>English</option>
+                    <option value="fr" {{ 'selected' if lang == 'fr' else '' }}>Français</option>
+                    <option value="ar" {{ 'selected' if lang == 'ar' else '' }}>العربية</option>
+                </select>
+            </div>
+        </div>
         <div class="welcome-text">
-            <p>{{ t('welcome') }}</p>
-            <p>{{ t('intro') }}</p>
+            {% if t('welcome') %}
+                <p>{{ t('welcome') }}</p>
+            {% endif %}
+            {% if t('intro') %}
+                <p>{{ t('intro') }}</p>
+            {% endif %}
         </div>
 
         <form id="surveyForm">
             <!-- Contact Information -->
             <div class="question">
-                <h3>{{ t('contact_info') }}</h3>
-                <p style="color: #666; margin-bottom: 15px;">{{ t('contact_desc') }}</p>
+                <h3>1. {{ t('contact_info') }}</h3>
+                {% if t('contact_desc') %}
+                    <p style="color: #666; margin-bottom: 15px;">{{ t('contact_desc') }}</p>
+                {% endif %}
                 
                 <div style="margin-bottom: 15px;">
                     <label for="contact_name" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('name') }}</label>
@@ -246,30 +254,30 @@
 
             <!-- Age Group -->
             <div class="question">
-                <h3>{{ t('age_group') }}</h3>
+                <h3>2. {{ t('age_group') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="age_under_50" name="age_group" value="under_50">
-                        <label for="age_under_50">{{ t('age_under_50') }}</label>
+                        <input type="radio" id="age_under_60" name="age_group" value="under_60">
+                        <label for="age_under_60">{{ t('age_under_60') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_50_65" name="age_group" value="50_65">
-                        <label for="age_50_65">{{ t('age_50_65') }}</label>
+                        <input type="radio" id="age_60_70" name="age_group" value="60_70">
+                        <label for="age_60_70">{{ t('age_60_70') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_65_75" name="age_group" value="65_75">
-                        <label for="age_65_75">{{ t('age_65_75') }}</label>
+                        <input type="radio" id="age_70_80" name="age_group" value="70_80">
+                        <label for="age_70_80">{{ t('age_70_80') }}</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="age_over_75" name="age_group" value="over_75">
-                        <label for="age_over_75">{{ t('age_over_75') }}</label>
+                        <input type="radio" id="age_over_80" name="age_group" value="over_80">
+                        <label for="age_over_80">{{ t('age_over_80') }}</label>
                     </div>
                 </div>
             </div>
 
             <!-- Digital Assistant Usage -->
             <div class="question">
-                <h3>{{ t('digital_assistant') }}</h3>
+                <h3>3. {{ t('digital_assistant') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="digital_assistant_yes" name="digital_assistant" value="yes">
@@ -284,7 +292,7 @@
 
             <!-- Technology Difficulty -->
             <div class="question">
-                <h3>{{ t('difficulty_tech') }}</h3>
+                <h3>4. {{ t('difficulty_tech') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="difficulty_1" name="difficulty_using_tech" value="1">
@@ -311,7 +319,7 @@
 
             <!-- Interest in AI -->
             <div class="question">
-                <h3>{{ t('interest_ai') }}</h3>
+                <h3>5. {{ t('interest_ai') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="interest_1" name="interest_in_ai" value="1">
@@ -329,12 +337,16 @@
                         <input type="radio" id="interest_4" name="interest_in_ai" value="4">
                         <label for="interest_4">{{ t('very_interested') }}</label>
                     </div>
+                    <div class="radio-option">
+                        <input type="radio" id="interest_5" name="interest_in_ai" value="just_talk">
+                        <label for="interest_5">{{ t('just_talk') }}</label>
+                    </div>
                 </div>
             </div>
 
             <!-- Helpful Features -->
             <div class="question">
-                <h3>{{ t('helpful_features') }}</h3>
+                <h3>6. {{ t('helpful_features') }}</h3>
                 <div class="checkbox-group">
                     <div class="checkbox-option">
                         <input type="checkbox" id="feature_reminders" name="helpful_features" value="reminders">
@@ -361,7 +373,7 @@
 
             <!-- AI Voice Comfort -->
             <div class="question">
-                <h3>{{ t('ai_voice') }}</h3>
+                <h3>7. {{ t('ai_voice') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="voice_1" name="comfort_with_ai_voice" value="1">
@@ -386,59 +398,13 @@
                 </div>
             </div>
 
-            <!-- Concerns -->
-            <div class="question">
-                <h3>{{ t('concerns') }}</h3>
-                <textarea name="concerns" placeholder="{{ t('concerns_placeholder') }}"></textarea>
-            </div>
 
-            <!-- Trial Participation -->
-            <div class="question">
-                <h3>{{ t('trial_participation') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="trial_yes" name="trial_participation" value="yes">
-                        <label for="trial_yes">{{ t('yes') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="trial_maybe" name="trial_participation" value="maybe">
-                        <label for="trial_maybe">{{ t('maybe') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="trial_no" name="trial_participation" value="no">
-                        <label for="trial_no">{{ t('no') }}</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Willingness to Pay -->
-            <div class="question">
-                <h3>{{ t('willingness_pay') }}</h3>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="pay_free" name="willingness_to_pay" value="free">
-                        <label for="pay_free">{{ t('free') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="pay_low" name="willingness_to_pay" value="low_cost">
-                        <label for="pay_low">{{ t('low_cost') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="pay_moderate" name="willingness_to_pay" value="moderate_cost">
-                        <label for="pay_moderate">{{ t('moderate_cost') }}</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="pay_premium" name="willingness_to_pay" value="premium_cost">
-                        <label for="pay_premium">{{ t('premium_cost') }}</label>
-                    </div>
-                </div>
-            </div>
 
 
 
             <!-- Social Contact -->
             <div class="question">
-                <h3>{{ t('social_contact') }}</h3>
+                <h3>8. {{ t('social_contact') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="social_daily" name="social_contact" value="daily">
@@ -465,7 +431,7 @@
 
             <!-- Lonely When Not Talking -->
             <div class="question">
-                <h3>{{ t('lonely_feel') }}</h3>
+                <h3>9. {{ t('lonely_feel') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="lonely_always" name="lonely_feel" value="always">
@@ -492,7 +458,7 @@
 
             <!-- Lonely Frequency -->
             <div class="question">
-                <h3>{{ t('lonely_frequency') }}</h3>
+                <h3>10. {{ t('lonely_frequency') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="lonely_freq_daily" name="lonely_frequency" value="daily">
@@ -517,36 +483,59 @@
                 </div>
             </div>
 
+            <!-- Willingness to Pay -->
+            <div class="question">
+                <h3>11. {{ t('willingness_pay') }}</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="pay_free" name="willingness_to_pay" value="free">
+                        <label for="pay_free">{{ t('free') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_low" name="willingness_to_pay" value="low_cost">
+                        <label for="pay_low">{{ t('low_cost') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_moderate" name="willingness_to_pay" value="moderate_cost">
+                        <label for="pay_moderate">{{ t('moderate_cost') }}</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="pay_premium" name="willingness_to_pay" value="premium_cost">
+                        <label for="pay_premium">{{ t('premium_cost') }}</label>
+                    </div>
+                </div>
+            </div>
+
             <!-- Interest Level -->
             <div class="question">
-                <h3>{{ t('interest_level') }}</h3>
+                <h3>12. {{ t('interest_level') }}</h3>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="interest_1" name="interest_level" value="1">
-                        <label for="interest_1">1 - {{ t('not_interested') }}</label>
+                        <label for="interest_1">⭐ {{ t('not_interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_2" name="interest_level" value="2">
-                        <label for="interest_2">2 - {{ t('somewhat_interested') }}</label>
+                        <label for="interest_2">⭐⭐ {{ t('somewhat_interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_3" name="interest_level" value="3">
-                        <label for="interest_3">3 - {{ t('interested') }}</label>
+                        <label for="interest_3">⭐⭐⭐ {{ t('interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_4" name="interest_level" value="4">
-                        <label for="interest_4">4 - {{ t('very_interested') }}</label>
+                        <label for="interest_4">⭐⭐⭐⭐ {{ t('very_interested') }}</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="interest_5" name="interest_level" value="5">
-                        <label for="interest_5">5 - {{ t('very_interested') }}</label>
+                        <label for="interest_5">⭐⭐⭐⭐⭐ {{ t('very_interested') }}</label>
                     </div>
                 </div>
             </div>
 
             <!-- Additional Comments -->
             <div class="question">
-                <h3>{{ t('additional_comments') }}</h3>
+                <h3>13. {{ t('additional_comments') }}</h3>
                 <textarea name="additional_comments" placeholder="{{ t('comments_placeholder') }}"></textarea>
             </div>
 
@@ -554,9 +543,112 @@
         </form>
 
         <div id="message"></div>
+        
+        <!-- Debug buttons for testing form persistence -->
+        <div style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+            <button onclick="saveFormData()" style="margin-right: 10px;">Save Form Data</button>
+            <button onclick="loadFormData()" style="margin-right: 10px;">Load Form Data</button>
+            <button onclick="clearFormData()" style="margin-right: 10px;">Clear Form Data</button>
+            <button onclick="console.log('Saved data:', localStorage.getItem('eldercare_survey_data'))">Show Saved Data</button>
+        </div>
     </div>
 
     <script>
+        // Form persistence functions
+        function saveFormData() {
+            const form = document.getElementById('surveyForm');
+            const formData = new FormData(form);
+            const data = {};
+            
+            // Save all form inputs
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    // Handle multiple values (checkboxes)
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('eldercare_survey_data', JSON.stringify(data));
+            console.log('Form data saved:', data);
+        }
+        
+        function loadFormData() {
+            const savedData = localStorage.getItem('eldercare_survey_data');
+            if (!savedData) {
+                console.log('No saved data found');
+                return;
+            }
+            
+            console.log('Loading saved data:', savedData);
+            const data = JSON.parse(savedData);
+            const form = document.getElementById('surveyForm');
+            
+            // Restore form data
+            Object.keys(data).forEach(key => {
+                const value = data[key];
+                const elements = form.querySelectorAll(`[name="${key}"]`);
+                
+                console.log(`Restoring ${key}:`, value, 'Found elements:', elements.length);
+                
+                elements.forEach(element => {
+                    if (element.type === 'radio' || element.type === 'checkbox') {
+                        if (Array.isArray(value)) {
+                            // Handle multiple values for checkboxes
+                            if (value.includes(element.value)) {
+                                element.checked = true;
+                                console.log(`Checked ${element.name} = ${element.value}`);
+                            }
+                        } else {
+                            // Handle single value for radio buttons
+                            if (element.value === value) {
+                                element.checked = true;
+                                console.log(`Checked ${element.name} = ${element.value}`);
+                            }
+                        }
+                    } else {
+                        // Handle text inputs, textareas, etc.
+                        element.value = value;
+                        console.log(`Set ${element.name} = ${value}`);
+                    }
+                });
+            });
+        }
+        
+        function clearFormData() {
+            localStorage.removeItem('eldercare_survey_data');
+        }
+        
+        // Save form data when any input changes
+        function setupFormPersistence() {
+            const form = document.getElementById('surveyForm');
+            const inputs = form.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                input.addEventListener('change', saveFormData);
+                input.addEventListener('input', saveFormData);
+            });
+        }
+        
+        // Load saved data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, loading form data...');
+            loadFormData();
+            setupFormPersistence();
+        });
+        
+        // Also try loading on window load as backup
+        window.addEventListener('load', function() {
+            console.log('Window loaded, loading form data...');
+            loadFormData();
+        });
+        
         function changeLanguage(lang) {
             fetch(`/set-language/${lang}`)
                 .then(response => response.json())
@@ -586,6 +678,7 @@
                 if (data.status === 'success') {
                     messageDiv.innerHTML = `<div class="success-message">${data.message}</div>`;
                     document.getElementById('surveyForm').reset();
+                    clearFormData(); // Clear saved data after successful submission
                 } else {
                     messageDiv.innerHTML = `<div class="error-message">Error: ${data.message}</div>`;
                 }

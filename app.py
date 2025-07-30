@@ -21,7 +21,6 @@ def init_db():
             helpful_features TEXT,
             comfort_with_ai_voice TEXT,
             concerns TEXT,
-            trial_participation TEXT,
             willingness_to_pay TEXT,
             interest_level TEXT,
             additional_comments TEXT,
@@ -69,11 +68,41 @@ def set_language(lang):
 def waiting_list():
     conn = sqlite3.connect('survey.db')
     c = conn.cursor()
+    
+    # Get all survey responses for statistics
+    c.execute('SELECT age_group, interest_level FROM responses')
+    all_responses = c.fetchall()
+    
+    # Get waiting list entries
     c.execute('SELECT * FROM waiting_list ORDER BY added_date DESC')
     people = c.fetchall()
+    
     conn.close()
     
-    return render_template('waiting_list.html', people=people)
+    # Calculate statistics
+    total_people = len(all_responses)
+    
+    # Age group counts - handle both string and integer values
+    age_60_70 = len([r for r in all_responses if str(r[0]) == '60_70'])
+    age_70_80 = len([r for r in all_responses if str(r[0]) == '70_80'])
+    age_over_80 = len([r for r in all_responses if str(r[0]) == 'over_80'])
+    age_under_60 = len([r for r in all_responses if str(r[0]) == 'under_60'])
+    
+    # Interest level counts - handle both string and integer values
+    interested = len([r for r in all_responses if str(r[1]) in ['3', '4', '5']])  # 3, 4, or 5 are considered "interested"
+    not_interested = len([r for r in all_responses if str(r[1]) in ['1', '2']])  # 1 or 2 are "not interested"
+    
+    stats = {
+        'total_people': total_people,
+        'age_60_70': age_60_70,
+        'age_70_80': age_70_80,
+        'age_over_80': age_over_80,
+        'age_under_60': age_under_60,
+        'interested': interested,
+        'not_interested': not_interested
+    }
+    
+    return render_template('waiting_list.html', people=people, stats=stats)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -87,7 +116,6 @@ def submit():
     helpful_features = data.get('helpful_features', '')
     comfort_with_ai_voice = data.get('comfort_with_ai_voice', '')
     concerns = data.get('concerns', '')
-    trial_participation = data.get('trial_participation', '')
     willingness_to_pay = data.get('willingness_to_pay', '')
     interest_level = data.get('interest_level', '')
     additional_comments = data.get('additional_comments', '')
@@ -105,22 +133,22 @@ def submit():
         INSERT INTO responses (
             age_group, uses_digital_assistant, difficulty_using_tech,
             interest_in_ai, helpful_features, comfort_with_ai_voice,
-            concerns, trial_participation, willingness_to_pay, interest_level,
+            concerns, willingness_to_pay, interest_level,
             additional_comments, contact_name, contact_email, contact_phone, contact_preference,
             social_contact, lonely_feel, lonely_frequency
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         age_group, uses_digital_assistant, difficulty_using_tech,
         interest_in_ai, helpful_features, comfort_with_ai_voice,
-        concerns, trial_participation, willingness_to_pay, interest_level,
+        concerns, willingness_to_pay, interest_level,
         additional_comments, contact_name, contact_email, contact_phone, contact_preference,
         social_contact, lonely_feel, lonely_frequency
     ))
     conn.commit()
     conn.close()
 
-    # Add to waiting list if they're interested in trying it
-    if trial_participation.lower() in ['yes', 'maybe'] and (contact_name or contact_email or contact_phone):
+    # Add to waiting list if they're interested (interest level 3, 4, or 5) and provided contact info
+    if interest_level in ['3', '4', '5'] and (contact_name or contact_email or contact_phone):
         conn = sqlite3.connect('survey.db')
         c = conn.cursor()
         

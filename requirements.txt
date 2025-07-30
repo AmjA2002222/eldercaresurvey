@@ -1,5 +1,4 @@
 Flask==2.3.3
+pyngrok==6.0.0
 Werkzeug==2.3.7
-reportlab==4.0.4
-pdfrw==0.4
-pyngrok==7.2.12 
+gunicorn==21.2.0 
