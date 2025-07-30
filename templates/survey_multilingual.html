@@ -205,6 +205,45 @@
         </div>
 
         <form id="surveyForm">
+            <!-- Contact Information -->
+            <div class="question">
+                <h3>{{ t('contact_info') }}</h3>
+                <p style="color: #666; margin-bottom: 15px;">{{ t('contact_desc') }}</p>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_name" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('name') }}</label>
+                    <input type="text" id="contact_name" name="contact_name" placeholder="{{ t('name_placeholder') }}" required>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_email" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('email') }}</label>
+                    <input type="email" id="contact_email" name="contact_email" placeholder="{{ t('email_placeholder') }}" required>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_phone" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('phone') }}</label>
+                    <input type="tel" id="contact_phone" name="contact_phone" placeholder="{{ t('phone_placeholder') }}" required>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="contact_preference" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('contact_preference') }}</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="pref_email" name="contact_preference" value="Email" required>
+                            <label for="pref_email">{{ t('pref_email') }}</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pref_phone" name="contact_preference" value="Phone" required>
+                            <label for="pref_phone">{{ t('pref_phone') }}</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="pref_text" name="contact_preference" value="Text" required>
+                            <label for="pref_text">{{ t('pref_text') }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Age Group -->
             <div class="question">
                 <h3>{{ t('age_group') }}</h3>
@@ -509,44 +548,7 @@
                 </div>
             </div>
 
-            <!-- Contact Information -->
-            <div class="question">
-                <h3>{{ t('contact_info') }}</h3>
-                <p style="color: #666; margin-bottom: 15px;">{{ t('contact_desc') }}</p>
-                
-                <div style="margin-bottom: 15px;">
-                    <label for="contact_name" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('name') }}</label>
-                    <input type="text" id="contact_name" name="contact_name" placeholder="{{ t('name_placeholder') }}">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label for="contact_email" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('email') }}</label>
-                    <input type="email" id="contact_email" name="contact_email" placeholder="{{ t('email_placeholder') }}">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label for="contact_phone" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('phone') }}</label>
-                    <input type="tel" id="contact_phone" name="contact_phone" placeholder="{{ t('phone_placeholder') }}">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label for="contact_preference" style="display: block; margin-bottom: 5px; font-weight: bold;">{{ t('contact_preference') }}</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="pref_email" name="contact_preference" value="Email">
-                            <label for="pref_email">{{ t('pref_email') }}</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="pref_phone" name="contact_preference" value="Phone">
-                            <label for="pref_phone">{{ t('pref_phone') }}</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="pref_text" name="contact_preference" value="Text">
-                            <label for="pref_text">{{ t('pref_text') }}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <button type="submit" class="submit-btn">{{ t('submit') }}</button>
         </form>
